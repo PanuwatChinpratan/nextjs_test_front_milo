@@ -12,7 +12,8 @@
     "deleteSelected": "Delete Selected"
   },
   "shape": {
-    "moveShape": "Move Shape (rotate left)",
+    "moveShapeLeft": "Move Shape Left",
+    "moveShapeRight": "Move Shape Right",
     "movePosition": "Move Position (swap rows)",
     "hint": "Click a shape to randomize its position"
   },

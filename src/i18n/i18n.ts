@@ -7,19 +7,10 @@ const resources = {
   th: { common: thCommon },
 } as const;
 
-const detectInitialLanguage = (): string => {
-  if (typeof window === "undefined") {
-    return "en";
-  }
-
-  const stored = window.localStorage.getItem("i18nLng");
-  return stored && resources[stored as keyof typeof resources] ? stored : "en";
-};
-
 if (!i18n.isInitialized) {
   i18n.init({
     resources,
-    lng: detectInitialLanguage(),
+    lng: "en",
     fallbackLng: "en",
     defaultNS: "common",
     interpolation: {
@@ -29,3 +20,12 @@ if (!i18n.isInitialized) {
 }
 
 export default i18n;
+
+export const readStoredLanguage = (): string | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const stored = window.localStorage.getItem("i18nLng");
+  return stored && stored in resources ? stored : null;
+};

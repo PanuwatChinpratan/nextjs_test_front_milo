@@ -4,7 +4,7 @@ import { Button, Card, Space, Typography } from "antd";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "@/i18n/useTranslation";
 import styles from "./shapes.module.css";
-import { rotateLeft, shuffle } from "./shapes.logic";
+import { rotateLeft, rotateRight, shuffle } from "./shapes.logic";
 import type { ShapeItem } from "./shapes.types";
 
 const baseShapes: ShapeItem[] = [
@@ -30,6 +30,14 @@ const ShapesPanel = () => {
     );
   }, []);
 
+  const handleRotateRight = useCallback(() => {
+    setShapes((current) =>
+      normalizeOrder(
+        rotateRight([...current].sort((a, b) => a.order - b.order)),
+      ),
+    );
+  }, []);
+
   const handleToggleInvert = useCallback(() => {
     setInvertRows((value) => !value);
   }, []);
@@ -45,11 +53,12 @@ const ShapesPanel = () => {
 
   return (
     <Card>
-      <Space direction="vertical" size={16} style={{ width: "100%" }}>
-        <Space wrap>
-          <Button onClick={handleRotateLeft}>{t("shape.moveShape")}</Button>
-          <Button onClick={handleToggleInvert}>{t("shape.movePosition")}</Button>
-        </Space>
+        <Space direction="vertical" size={16} style={{ width: "100%" }}>
+          <Space wrap>
+            <Button onClick={handleRotateLeft}>{t("shape.moveShapeLeft")}</Button>
+            <Button onClick={handleRotateRight}>{t("shape.moveShapeRight")}</Button>
+            <Button onClick={handleToggleInvert}>{t("shape.movePosition")}</Button>
+          </Space>
         <Typography.Text type="secondary">{t("shape.hint")}</Typography.Text>
         <div
           className={`${styles.grid}${invertRows ? ` ${styles.invert}` : ""}`}

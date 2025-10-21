@@ -2,7 +2,8 @@
 
 import { Select } from "antd";
 import type { SelectProps } from "antd";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { readStoredLanguage } from "@/i18n/i18n";
 import { useTranslation } from "@/i18n/useTranslation";
 
 type LanguageOption = "en" | "th";
@@ -18,6 +19,16 @@ const LanguageSwitcher = () => {
     () => (language === "th" ? "th" : "en"),
     [language],
   );
+  useEffect(() => {
+    const stored = readStoredLanguage();
+    if (
+      stored &&
+      (stored === "en" || stored === "th") &&
+      stored !== i18n.language
+    ) {
+      void i18n.changeLanguage(stored);
+    }
+  }, [i18n]);
   const handleChange = useCallback(
     async (value: LanguageOption) => {
       await i18n.changeLanguage(value);
