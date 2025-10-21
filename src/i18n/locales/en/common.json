@@ -1,0 +1,27 @@
+{
+  "tabs": {
+    "shape": "Shape Playground",
+    "people": "People"
+  },
+  "actions": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "deleteSelected": "Delete Selected"
+  },
+  "shape": {
+    "moveShape": "Move Shape (rotate left)",
+    "movePosition": "Move Position (swap rows)",
+    "hint": "Click a shape to randomize its position"
+  },
+  "people": {
+    "title": "People Manager",
+    "formTitle": "Person Form",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "birthday": "Birthday"
+  }
+}

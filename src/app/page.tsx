@@ -1,95 +1,83 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import "@/i18n/i18n";
+import {
+  ConfigProvider,
+  Layout,
+  Space,
+  Tabs,
+  Typography,
+  theme as antdTheme,
+} from "antd";
+import { useMemo } from "react";
+import { useTranslation } from "@/i18n/useTranslation";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import PeoplePanel from "@/features/people/PeoplePanel";
+import ShapesPanel from "@/features/shapes/ShapesPanel";
+
+const { useToken } = antdTheme;
+const { Content } = Layout;
+
+const PageContent = () => {
+  const { t } = useTranslation();
+  const {
+    token: { colorBgContainer },
+  } = useToken();
+
+  const tabItems = useMemo(
+    () => [
+      {
+        key: "shapes",
+        label: t("tabs.shape"),
+        children: <ShapesPanel />,
+      },
+      {
+        key: "people",
+        label: t("tabs.people"),
+        children: <PeoplePanel />,
+      },
+    ],
+    [t],
+  );
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <Layout
+      style={{
+        minHeight: "100vh",
+        padding: 24,
+        background: colorBgContainer,
+      }}
+    >
+      <Content style={{ maxWidth: 1040, margin: "0 auto", width: "100%" }}>
+        <Space
+          align="center"
+          style={{
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: 16,
+          }}
+        >
+          <Typography.Title level={3} style={{ margin: 0, color: "var(--orange)" }}>
+            Swift Dynamics Frontend Test
+          </Typography.Title>
+          <LanguageSwitcher />
+        </Space>
+        <Tabs defaultActiveKey="shapes" items={tabItems} />
+      </Content>
+    </Layout>
+  );
+};
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+export default function Page() {
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#FFA200",
+        },
+      }}
+    >
+      <PageContent />
+    </ConfigProvider>
   );
 }
